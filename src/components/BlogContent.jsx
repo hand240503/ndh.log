@@ -4,7 +4,7 @@
 export default function BlogContent({ html }) {
   return (
     <article
-      className="prose max-w-none"
+      className="prose-lesson"
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );

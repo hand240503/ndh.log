@@ -1,4 +1,5 @@
-﻿import "./globals.css";
+﻿const fs = require('fs');
+const layout = `import "./globals.css";
 import Sidebar from "@/components/Sidebar";
 import PageTransition from "@/components/PageTransition";
 
@@ -13,7 +14,7 @@ export default function RootLayout({ children }) {
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `
+            __html: \`
               try {
                 if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
                   document.documentElement.classList.add("is-dark")
@@ -21,7 +22,7 @@ export default function RootLayout({ children }) {
                   document.documentElement.classList.add("is-light")
                 }
               } catch (_) {}
-            `,
+            \`,
           }}
         />
         <link
@@ -37,7 +38,7 @@ export default function RootLayout({ children }) {
             <PageTransition>{children}</PageTransition>
             
             <footer style={{ marginTop: 80, paddingTop: 40, borderTop: "1px solid var(--color-border)", fontSize: 12, color: "var(--color-text-muted)" }}>
-              ndh.log — giữ mọi thứ cho riêng mình, không ngừng cố gắng không ngường phát triển
+              ndh.log — nội dung là Markdown, lưu trữ trên GitHub, không database.
             </footer>
           </main>
         </div>
@@ -45,3 +46,5 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+`
+fs.writeFileSync('src/app/layout.jsx', layout);

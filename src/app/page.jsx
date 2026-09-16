@@ -1,38 +1,75 @@
-import Link from "next/link";
-import { getAllPosts } from "@/lib/posts";
-import { getFeaturedProjects } from "@/lib/projects";
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
+import { remark } from "remark";
+import html from "remark-html";
+import SectionHeader from "@/components/SectionHeader";
+import PostItem from "@/components/PostItem";
+import ShelfItem from "@/components/ShelfItem";
 import ProjectCard from "@/components/ProjectCard";
+import TimelineItem from "@/components/TimelineItem";
 
-export default function HomePage() {
-  const posts = getAllPosts().slice(0, 3);
-  const featuredProjects = getFeaturedProjects();
+export default function Home() {
+  // Đọc dữ liệu Timeline từ file home.md
+  const filePath = path.join(process.cwd(), "content/pages/home.md");
+  const fileContents = fs.readFileSync(filePath, "utf8");
+  const { data } = matter(fileContents);
+
+  const timeline = (data.timeline || []).map((item) => {
+    const processedContent = remark()
+      .use(html)
+      .processSync(item.content)
+      .toString();
+    const inlineHtml = processedContent
+      .replace(/^<p>/, "")
+      .replace(/<\/p>\n?$/, "");
+    return { ...item, content: inlineHtml };
+  });
 
   return (
-    <main>
-      <h1 className="text-3xl font-bold mb-6">Xin chào 👋</h1>
-
-      <section className="mb-12">
-        <h2 className="text-xl font-semibold mb-4">Dự án nổi bật</h2>
-        <div className="grid gap-4 sm:grid-cols-2">
-          {featuredProjects.map((project) => (
-            <ProjectCard key={project.slug} project={project} />
-          ))}
+    <main className="main-wrapper">
+      <div className="main-container">
+        <div className="main-content page">
+          <header className="hero hero-index">
+            <div className="hero-wrapper">
+              <div>
+                <h1 className="flex-align-center gap">Hey, I'm Tania!</h1>
+                <p className="hero-description hero-tagline">
+                  Principal software engineer, writer, all-around nerd.
+                </p>
+                <header className="heading small">
+                  <div className="heading-row">
+                    <h2>
+                      <span>A brief timeline</span>
+                    </h2>
+                  </div>
+                </header>
+                <ul className="hero-eras">
+                  {timeline.map((item, i) => (
+                    <TimelineItem
+                      key={i}
+                      dates={item.dates}
+                      content={item.content}
+                    />
+                  ))}
+                </ul>
+                <p className="hero-also">
+                  <span className="hero-also-label">Also: </span> city explorer,
+                  weight lifter, brick clicker, accordion enthusiast, biker,
+                  Magic gatherer, webmaster.
+                </p>
+              </div>
+              <div className="hero-image-container">
+                <img src="/ram.png" className="hero-image" alt="RAM Ram" />
+                <aside className="hero-bubble">
+                  Can't remember how to spell my name? Just go to{" "}
+                  <a href="https://tania.dev">tania.dev</a>!
+                </aside>
+              </div>
+            </div>
+          </header>
         </div>
-      </section>
-
-      <section>
-        <h2 className="text-xl font-semibold mb-4">Bài viết gần đây</h2>
-        <ul className="space-y-3">
-          {posts.map((post) => (
-            <li key={post.slug}>
-              <Link href={`/blog/${post.slug}`} className="font-medium underline">
-                {post.title}
-              </Link>
-              <p className="text-sm text-gray-500">{post.excerpt}</p>
-            </li>
-          ))}
-        </ul>
-      </section>
+      </div>
     </main>
   );
 }
