@@ -1,4 +1,4 @@
-import fs from "fs";
+﻿import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { unified } from "unified";
@@ -9,7 +9,7 @@ import rehypeStringify from "rehype-stringify";
 
 const postsDirectory = path.join(process.cwd(), "content/posts");
 
-// Đọc toàn bộ metadata bài viết (dùng cho trang danh sách blog)
+// Äá»c toÃ n bá»™ metadata bÃ i viáº¿t (dÃ¹ng cho trang danh sÃ¡ch blog)
 export function getAllPosts() {
   if (!fs.existsSync(postsDirectory)) return [];
 
@@ -33,16 +33,16 @@ export function getAllPosts() {
     };
   });
 
-  // Mới nhất lên đầu
+  // Má»›i nháº¥t lÃªn Ä‘áº§u
   return posts.sort((a, b) => new Date(b.date) - new Date(a.date));
 }
 
-// Danh sách slug — dùng cho generateStaticParams()
+// Danh sÃ¡ch slug â€” dÃ¹ng cho generateStaticParams()
 export function getAllPostSlugs() {
   return getAllPosts().map((post) => ({ slug: post.slug }));
 }
 
-// Đọc 1 bài viết đầy đủ + convert Markdown -> HTML
+// Äá»c 1 bÃ i viáº¿t Ä‘áº§y Ä‘á»§ + convert Markdown -> HTML
 export async function getPostBySlug(slug) {
   const fullPath = path.join(postsDirectory, `${slug}.md`);
   const fileContents = fs.readFileSync(fullPath, "utf8");
@@ -58,12 +58,12 @@ export async function getPostBySlug(slug) {
   const isProd = process.env.NODE_ENV === "production";
   let contentHtml = processed.toString();
   if (isProd) {
-    contentHtml = contentHtml.replaceAll('src="/images/', 'src="/ndh.tech/images/');
+    contentHtml = contentHtml.replaceAll('src="/images/', 'src="/ndh.log/images/');
   }
 
   const coverImage = data.coverImage
     ? isProd && data.coverImage.startsWith("/images/")
-      ? `/ndh.tech${data.coverImage}`
+      ? `/ndh.log${data.coverImage}`
       : data.coverImage
     : null;
 
@@ -77,3 +77,4 @@ export async function getPostBySlug(slug) {
     contentHtml,
   };
 }
+

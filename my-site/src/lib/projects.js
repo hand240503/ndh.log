@@ -1,4 +1,4 @@
-import fs from "fs";
+﻿import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { unified } from "unified";
@@ -40,7 +40,7 @@ export function getAllProjects() {
   );
 }
 
-// Dùng cho trang chủ: chỉ lấy project được ghim (featured: true)
+// DÃ¹ng cho trang chá»§: chá»‰ láº¥y project Ä‘Æ°á»£c ghim (featured: true)
 export function getFeaturedProjects() {
   return getAllProjects().filter((p) => p.featured);
 }
@@ -64,12 +64,12 @@ export async function getProjectBySlug(slug) {
   const isProd = process.env.NODE_ENV === "production";
   let contentHtml = processed.toString();
   if (isProd) {
-    contentHtml = contentHtml.replaceAll('src="/images/', 'src="/ndh.tech/images/');
+    contentHtml = contentHtml.replaceAll('src="/images/', 'src="/ndh.log/images/');
   }
 
   const coverImage = data.coverImage
     ? isProd && data.coverImage.startsWith("/images/")
-      ? `/ndh.tech${data.coverImage}`
+      ? `/ndh.log${data.coverImage}`
       : data.coverImage
     : null;
 
@@ -86,3 +86,4 @@ export async function getProjectBySlug(slug) {
     contentHtml,
   };
 }
+

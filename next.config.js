@@ -1,14 +1,14 @@
-const isProd = process.env.NODE_ENV === "production";
+﻿const isProd = process.env.NODE_ENV === "production";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "export",
-  basePath: isProd ? "/ndh.tech" : "",
-  assetPrefix: isProd ? "/ndh.tech" : "",
+  basePath: isProd ? "/ndh.log" : "",
+  assetPrefix: isProd ? "/ndh.log" : "",
   images: {
-    unoptimized: true, // GitHub Pages không có Image Optimization server
+    unoptimized: true, // GitHub Pages khÃ´ng cÃ³ Image Optimization server
   },
-  trailingSlash: true, // giúp route tĩnh resolve đúng trên GitHub Pages
+  trailingSlash: true, // giÃºp route tÄ©nh resolve Ä‘Ãºng trÃªn GitHub Pages
 };
 
 module.exports = nextConfig;
