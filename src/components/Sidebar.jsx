@@ -1,4 +1,6 @@
 ﻿"use client";
+import { assetPrefix } from "@/utils/assetPrefix";
+
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -151,7 +153,7 @@ export default function Sidebar() {
           </a>
           <a href="/me/">
             <img
-              src="/static/floppylogo-0c07fbe46fbceda7efdfb169dd4ef14a.png"
+              src={`${assetPrefix}/static/floppylogo-0c07fbe46fbceda7efdfb169dd4ef14a.png`}
               alt=""
             />
             About me

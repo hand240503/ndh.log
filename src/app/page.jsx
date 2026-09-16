@@ -1,3 +1,4 @@
+import { assetPrefix } from "@/utils/assetPrefix";
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
@@ -60,7 +61,11 @@ export default function Home() {
                 </p>
               </div>
               <div className="hero-image-container">
-                <img src="/ram.png" className="hero-image" alt="RAM Ram" />
+                <img
+                  src={`${assetPrefix}/ram.png`}
+                  className="hero-image"
+                  alt="RAM Ram"
+                />
                 <aside className="hero-bubble">
                   Can't remember how to spell my name? Just go to{" "}
                   <a href="https://tania.dev">tania.dev</a>!
